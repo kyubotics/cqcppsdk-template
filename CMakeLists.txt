@@ -17,7 +17,7 @@ cq_set_app_id(${APP_ID}) # 设置 App Id, 必须
 
 set(LIB_NAME "app") # 酷Q要求开发阶段的应用名为 app.dll
 
-if(MSVC)
+if(MSVC AND (CMAKE_SIZEOF_VOID_P EQUAL 4)) # MSVC x86
     cq_add_app(${LIB_NAME} ${SOURCE_FILES}) # 添加 Std 模式的动态链接库构建目标
     cq_add_install_script(${LIB_NAME} "${PROJECT_SOURCE_DIR}/scripts/install.ps1") # 添加安装脚本(目前只支持 PowerShell 脚本, 建议脚本文件使用 UTF-16 LE 编码)
 endif()
