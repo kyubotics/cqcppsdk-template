@@ -20,7 +20,7 @@ CQ_INIT {
     });
 
     on_group_message([](const GroupMessageEvent &e) {
-        static const set<int> ENABLED_GROUPS = {123456, 123457};
+        static const set<int64_t> ENABLED_GROUPS = {123456, 123457};
         if (ENABLED_GROUPS.count(e.group_id) == 0) return; // 不在启用的群中, 忽略
 
         try {
@@ -49,15 +49,6 @@ CQ_INIT {
     });
 }
 
-#ifdef WIN32
-#include <Windows.h>
-#endif
-
-CQ_MENU(menu_demo_1) {
-    logging::info("菜单", "点击菜单1");
-#ifdef WIN32
-    MessageBoxW(nullptr, L"这是一个提示", L"提示", MB_OK | MB_SETFOREGROUND | MB_TASKMODAL | MB_TOPMOST);
-#endif
-}
+CQ_MENU(menu_demo_1) { logging::info("菜单", "点击菜单1"); }
 
 CQ_MENU(menu_demo_2) { send_private_message(10000, "测试"); }
