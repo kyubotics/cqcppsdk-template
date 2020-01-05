@@ -9,19 +9,19 @@ include_directories(extern/cqcppsdk/include) # 设置 SDK 的 include 目录为�
 include(extern/cqcppsdk/cqcppsdk.cmake) # 包含 SDK 的 CMake 脚本, 必须
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp) # 递归搜索 src 目录中的源文件, 可根据实际情况修改
 
-# 从 app_id.txt 文件读取 App Id, 也可以直接设置
+# 从 app_id.txt 文件读取 app id, 也可以直接设置
 file(READ "app_id.txt" APP_ID)
 string(STRIP "${APP_ID}" APP_ID)
 
-cq_set_app_id(${APP_ID}) # 设置 App Id, 必须
+cq_set_app_id(${APP_ID}) # 设置 app id, 必须
 
 set(LIB_NAME "app") # 酷Q要求开发阶段的应用名为 app.dll
 
 if(MSVC AND (CMAKE_SIZEOF_VOID_P EQUAL 4)) # MSVC x86
-    cq_add_app(${LIB_NAME} ${SOURCE_FILES}) # 添加 Std 模式的动态链接库构建目标
+    cq_add_app(${LIB_NAME} ${SOURCE_FILES}) # 添加 std 模式的动态链接库构建目标
     cq_add_install_script(${LIB_NAME} "${PROJECT_SOURCE_DIR}/scripts/install.ps1") # 添加安装脚本(目前只支持 PowerShell 脚本, 建议脚本文件使用 UTF-16 LE 编码)
 endif()
 
-# 添加 Dev 模式的可执行文件构建目标
+# 添加 dev 模式的可执行文件构建目标
 set(CQCPPSDK_DEV_MODE ON)
 cq_add_app(${LIB_NAME}_dev ${SOURCE_FILES})
