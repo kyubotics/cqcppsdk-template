@@ -21,7 +21,9 @@ install:
 build_script:
   - cmake -S . -B build -G "Visual Studio 16 2019" -A Win32 # CMake generate
   - cmake --build build --target app --config %CONFIGURATION% --clean-first --verbose # CMake build
-  - zip build/%CONFIGURATION%/%APP_ID%.zip app.json build/%CONFIGURATION%/app.dll # 打包 app.dll 和 app.json
+
+after_build:
+  - 7z a build/%CONFIGURATION%/%APP_ID%.zip app.json build/%CONFIGURATION%/app.dll # 打包 app.dll 和 app.json
 
 artifacts:
   - path: build/%CONFIGURATION%/%APP_ID%.zip
