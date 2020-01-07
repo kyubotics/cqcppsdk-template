@@ -49,6 +49,10 @@ CQ_INIT {
     });
 }
 
-CQ_MENU(menu_demo_1) { logging::info("菜单", "点击菜单1"); }
+CQ_MENU(menu_demo_1) {
+    logging::info("菜单", "点击菜单1");
+}
 
-CQ_MENU(menu_demo_2) { send_private_message(10000, "测试"); }
+CQ_MENU(menu_demo_2) {
+    send_private_message(10000, "测试");
+}
