@@ -3,6 +3,10 @@ project(cqcppsdk-demo) # 填写项目名称
 
 set(CMAKE_CXX_STANDARD 17) # 设置 C++ 标准版本为 C++17, 必须
 
+if (MSVC)
+    set(CMAKE_CXX_FLAGS "/MP ${CMAKE_CXX_FLAGS}") # 设置 MSVC 使用多进程编译, 可选
+endif()
+
 include_directories(src) # 设置 src 目录为包含目录, 可根据实际情况修改
 include_directories(extern/cqcppsdk/include) # 设置 SDK 的 include 目录为包含目录, 必须
 
