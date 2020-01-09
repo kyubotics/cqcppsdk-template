@@ -4,12 +4,9 @@ branches:
 
 image:
   - Visual Studio 2019
-  - Ubuntu  # 可视情况删除
-  - macos # 可视情况删除
 
 platform:
   - x86
-  - x64 # 可视情况删除
 
 configuration:
   - Debug # 禁用优化 - 包括调试信息
@@ -19,17 +16,15 @@ configuration:
 
 install:
   - git submodule update --init --recursive # 下载子模块
-  - ps: $env:APP_ID = (Get-Content app_id.txt) # 如果你没有使用 app_id.txt 存放 app id，需在此手动设置
+  - set /p APP_ID=<app_id.txt # 如果你没有使用 app_id.txt 存放 app id，需在此手动设置
 
 build_script:
-  # - cmake -B build -G "Visual Studio 16 2019" -A Win32 # CMake 配置
-  - cmake -B build # CMake 配置
-  - ps: cmake --build build --config $env:CONFIGURATION --clean-first --verbose # CMake 生成
+  - cmake -B build -G "Visual Studio 16 2019" -A Win32 # CMake generate
+  - cmake --build build --target app --config %CONFIGURATION% --clean-first --verbose # CMake build
 
 after_build:
-  - ps: $env:STD_MODE = (Test-Path build/$env:CONFIGURATION/app.dll)
-  - ps: if ($env:STD_MODE) { Copy-Item build/$env:CONFIGURATION/app.dll app.dll }
-  - ps: if ($env:STD_MODE) { 7z a build/$env:CONFIGURATION/$env:APP_ID.zip app.json app.dll } # 打包 app.dll 和 app.json
+  - copy build\%CONFIGURATION%\app.dll app.dll
+  - 7z a build\%CONFIGURATION%\%APP_ID%.zip app.json app.dll # 打包 app.dll 和 app.json
 
 artifacts:
-  - path: build/%CONFIGURATION%/%APP_ID%.zip
+  - path: build\%CONFIGURATION%\%APP_ID%.zip
