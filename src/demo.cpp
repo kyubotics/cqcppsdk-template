@@ -2,7 +2,7 @@
 #include <set>
 #include <sstream>
 
-#include "cqcppsdk.h"
+#include <cqcppsdk.h>
 
 using namespace cq;
 using namespace std;
@@ -16,7 +16,7 @@ CQ_INIT {
             logging::info_success("私聊", "私聊消息复读完成, 消息 Id: " + to_string(msgid));
             send_message(e.target, "事件子类型: " + to_string(e.sub_type));
         } catch (ApiError &e) {
-            logging::warning("私聊", "私聊消息复读失败, 错误码: " + e.code);
+            logging::warning("私聊", "私聊消息复读失败, 错误码: " + to_string(e.code));
         }
     });
 
