@@ -20,6 +20,10 @@ CQ_INIT {
         }
     });
 
+    on_message([](const MessageEvent &e) {
+        logging::debug("消息", "收到消息: " + e.message + "\n实际类型: " + typeid(e).name());
+    });
+
     on_group_message([](const GroupMessageEvent &e) {
         static const set<int64_t> ENABLED_GROUPS = {123456, 123457};
         if (ENABLED_GROUPS.count(e.group_id) == 0) return; // 不在启用的群中, 忽略
