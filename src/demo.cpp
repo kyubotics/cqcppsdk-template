@@ -6,6 +6,8 @@
 
 using namespace cq;
 using namespace std;
+using Message = cq::message::Message;
+using MessageSegment = cq::message::MessageSegment;
 
 CQ_INIT {
     on_enable([] { logging::info("启用", "插件已启用"); });
@@ -14,7 +16,8 @@ CQ_INIT {
         try {
             auto msgid = send_private_message(e.user_id, e.message); // 直接复读消息
             logging::info_success("私聊", "私聊消息复读完成, 消息 Id: " + to_string(msgid));
-            send_message(e.target, "事件子类型: " + to_string(e.sub_type));
+            send_message(e.target,
+                         MessageSegment::face(111) + "这是通过 message 模块构造的消息~"); // 使用 message 模块构造消息
         } catch (ApiError &e) {
             logging::warning("私聊", "私聊消息复读失败, 错误码: " + to_string(e.code));
         }
