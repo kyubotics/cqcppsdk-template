@@ -6,3 +6,4 @@ build
 out
 cmake-build-*
 tmp
+scripts/install.ps1
