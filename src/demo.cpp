@@ -2,7 +2,7 @@
 #include <set>
 #include <sstream>
 
-#include <cqcppsdk.h>
+#include <cqcppsdk/cqcppsdk.h>
 
 using namespace cq;
 using namespace std;
