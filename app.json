@@ -1,4 +1,5 @@
 {
+    "$schema": "https://awesome.cqp.moe/schema/app/v9/app-schema.json",
     "ret": 1,
     "apiver": 9,
     "name": "填写应用名称",
