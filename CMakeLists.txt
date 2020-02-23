@@ -15,16 +15,13 @@ string(STRIP "${APP_ID}" APP_ID)
 
 cq_set_app_id(${APP_ID}) # 设置 app id, 必须
 
-set(LIB_NAME "app") # 酷Q要求开发阶段的应用名为 app.dll
-
-if (CQ_CAN_BUILD_STD_MODE) # 环境允许构建 std 模式的 app.dll
-    cq_add_app(${LIB_NAME} ${SOURCE_FILES}) # 添加 std 模式的动态链接库构建目标
-    cq_add_install_script(${LIB_NAME} "${PROJECT_SOURCE_DIR}/scripts/install.ps1") # 添加安装脚本(目前只支持 PowerShell 脚本, 建议脚本文件使用 UTF-16 LE 编码)
+if (CQ_CAN_BUILD_STD_MODE)
+    cq_add_std_app(${SOURCE_FILES}) # 添加 std 模式的动态链接库构建目标
+    cq_install_std_app()
 endif ()
 
 # 添加 dev 模式的可执行文件构建目标
-set(CQCPPSDK_DEV_MODE ON)
-cq_add_app(${LIB_NAME}_dev ${SOURCE_FILES})
+cq_add_dev_app(${SOURCE_FILES})
 
 # 添加单元测试，如果无需测试，可删除
 enable_testing()
