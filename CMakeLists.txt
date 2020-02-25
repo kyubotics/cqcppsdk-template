@@ -22,7 +22,3 @@ endif ()
 
 # 添加 dev 模式的可执行文件构建目标
 cq_add_dev_app(${SOURCE_FILES})
-
-# 添加单元测试，如果无需测试，可删除
-enable_testing()
-add_subdirectory(extern/cqcppsdk/tests)
