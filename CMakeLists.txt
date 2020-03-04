@@ -3,7 +3,20 @@ project(cqcppsdk-demo) # 填写项目名称
 
 set(CMAKE_CXX_STANDARD 17) # 设置 C++ 标准版本为 C++17, 必须
 
-include(extern/cqcppsdk/cqcppsdk.cmake) # 包含 SDK 的 CMake 脚本, 必须
+include(extern/cqcppsdk/cqcppsdk.cmake OPTIONAL RESULT_VARIABLE CQCPPSDK_PATH) # 包含 SDK 的 CMake 脚本, 必须
+if(CQCPPSDK_PATH MATCHES "NOTFOUND") # 找不到cqcppsdk时自动从github获取
+    find_package(Git REQUIRED) # 查找Git
+    message(STATUS "Fetching cqcppsdk from https://github.com/cqmoe/cqcppsdk")
+    execute_process( # 执行一个子进程
+            COMMAND ${GIT_EXECUTABLE} clone https://github.com/cqmoe/cqcppsdk
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/extern"
+            RESULT_VARIABLE CQCPPSDK_CLONE_RESULT
+            )
+    if(CQCPPSDK_CLONE_RESULT)
+        message(FATAL_ERROR "Fail to fetch cqcppsdk")
+    endif()
+    include(extern/cqcppsdk/cqcppsdk.cmake)
+endif()
 
 include_directories(src) # 设置 src 目录为包含目录, 可根据实际情况修改
 
